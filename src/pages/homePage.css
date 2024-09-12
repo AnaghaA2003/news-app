@@ -1,0 +1,46 @@
+.content {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start; /* Align items to the top */
+    flex-wrap: wrap;
+    gap: 20px; /* Space between the cards */
+}
+
+.card {
+    width: 18rem;
+    height: 100%; /* Let the card expand to fill available height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Space out content evenly */
+    min-height: 25rem; /* Ensure a minimum height for all cards */
+}
+
+.card img {
+    object-fit: cover;
+    height: 150px; /* Fixed height for the image */
+}
+
+.card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Space out the content within the card */
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    flex-grow: 1;
+    margin-bottom: 10px;
+}
+
+.btn {
+    align-self: center;
+    width: 100%; /* Make the button take up the full width */
+    margin-top: 10px;
+}
