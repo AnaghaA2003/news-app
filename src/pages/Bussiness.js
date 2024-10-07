@@ -34,7 +34,7 @@ export default function Bussiness() {
         <b>BUSINESS</b>
       </h1>
 
-      <CardGroup style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row' }}>
+      <CardGroup style={{  flexDirection: 'row' }}>
         {news.length > 0 ? (
           news.map((article, index) => (
             <Card key={index} style={{ margin: '10px', flex: '1 0 21%' }}>

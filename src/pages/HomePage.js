@@ -162,7 +162,7 @@ export default function HomePage() {
         ) : (
           <p>Loading latest news...</p> // Show a loading message while news is being fetched
         )} */}
-          <CardGroup style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row' }}>
+          <CardGroup style={{ flexDirection: 'row' }}>
         {news.length > 0 ? (
           news.map((article, index) => (
             <Card key={index} style={{ margin: '10px', flex: '1 0 21%' }}>

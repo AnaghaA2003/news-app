@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react'
-import NavigationBar from '../components/NavigationBar'
-import './world.css'
-import Footer from '../components/Footer'
+import React, { useEffect, useState } from 'react';
+import NavigationBar from '../components/NavigationBar';
+import './world.css';
+import Footer from '../components/Footer';
 import axios from 'axios';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-
+import Spinner from 'react-bootstrap/Spinner'; // Import spinner for loading state
 
 export default function World() {
   const [news, setNews] = useState([]); // State to store fetched world news
+  const [loading, setLoading] = useState(true); // Loading state
 
   // Fetch world news from GNews API when the component mounts
   useEffect(() => {
@@ -20,67 +21,71 @@ export default function World() {
             token: '6b27b054e31d90827b9ed5785dfe50c9', // Replace with your GNews API key
             lang: 'en', // Language parameter
             topic: 'world', // Specify 'world' news
-            max: 5, // Limit number of articles to 5 (or as many cards as you need)
+            max: 5, // Limit number of articles to 5
           },
         });
         setNews(response.data.articles); // Set world news data
       } catch (error) {
         console.error('Error fetching the world news:', error);
+      } finally {
+        setLoading(false); // Set loading to false once data is fetched
       }
     };
     fetchNews();
   }, []);
+
   return (
     <div>
+      <NavigationBar />
+      <br />
 
+      <div className="section-header text-center">
+        <h1 className="display-4"><b>WORLD</b></h1>
+      </div>
 
-      <NavigationBar /><br></br>
-      
-      <div style={{ borderBottom: "2px solid black" }}></div>
-      <Container >
-
-        {news.length > 0 ? (
+      <Container className="news-container">
+        {loading ? (
+          <div className="text-center">
+            <Spinner animation="border" role="status">
+              <span className="sr-only">Loading...</span>
+            </Spinner>
+          </div>
+        ) : news.length > 0 ? (
           news.map((article, index) => (
-            <div key={index}>
-              <Row style={{ borderBottom: "2px solid black" }}>
-                <Col xs={12} md={8}>
-                  <img
-                    src={article.image || '/img/news.jpg'}
-                    style={{ borderRadius: '0.75rem' }}
-                    height={'285px'}
-                    width={'597px'}
-                    alt={article.title}
-                  />
-                </Col>
-                <Col xs={6} md={4}>
-                  <div className="info">
-                    <p className="title">{article.title}</p>
-                    <p>{article.description}</p>
-                    
-                Published on: {new Date(article.publishedAt).toLocaleDateString()}
-              
+            <Row key={index} className="news-card mb-4">
+              <Col xs={12} md={6} className="mb-3 mb-md-0">
+                <img
+                  src={article.image || '/img/news.jpg'}
+                  className="img-fluid rounded"
+                  alt={article.title}
+                />
+              </Col>
+              <Col xs={12} md={6}>
+                <div className="news-info">
+                  <h5 className="news-title">{article.title}</h5>
+                  <p>{article.description}</p>
+                  <small className="text-muted">
+                    Published on: {new Date(article.publishedAt).toLocaleDateString()}
+                  </small>
+                  <div className="text-end mt-3">
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={() => window.open(article.url, '_blank', 'noopener,noreferrer')}
+                    >
+                      Read More
+                    </button>
                   </div>
-                  <button
-                    type="button"
-                    className="action"
-                    style={{ marginLeft: '150px' }}
-                    onClick={() => window.open(article.url, '_blank', 'noopener,noreferrer')}
-                  >
-                    Read More
-                  </button>
-                  
-                </Col>
-              </Row>
-              <br />
-            </div>
+                </div>
+              </Col>
+            </Row>
           ))
         ) : (
-          <p>Loading world news...</p>
+          <p className="text-center">No news available at the moment.</p>
         )}
       </Container>
 
       <Footer />
-
     </div>
-  )
+  );
 }

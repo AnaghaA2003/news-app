@@ -32,7 +32,7 @@ export default function Sports() {
       <h1 className="text-center" style={{ fontFamily: 'auto', borderBottom: '1px solid black' }}>
         <b>SPORTS</b>
       </h1>
-      <CardGroup style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row' ,justifyContent:"center",alignContent:"center "}}>
+      <CardGroup style={{  flexDirection: 'row' ,justifyContent:"center",alignContent:"center "}}>
         {news.length > 0 ? (
           news.map((article, index) => (
             <Card key={index} style={{ margin: '10px', flex: '1 0 21%' }}>
